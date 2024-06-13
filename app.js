@@ -8,7 +8,7 @@ const privateKey = fs.readFileSync('/etc/letsencrypt/live/toptier.ventures/privk
 const certificate = fs.readFileSync('/etc/letsencrypt/live/toptier.ventures/fullchain.pem', 'utf8');
 const credentials = { key: privateKey, cert: certificate };
 
-const port = 443; // Standard HTTPS port
+const port = 442; // Standard HTTPS port
 
 app.get('/', (req, res) => {
   setTimeout(() => {
