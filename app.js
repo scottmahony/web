@@ -10,8 +10,8 @@ let privateKey;
 let certificate;
 
 try {
-  privateKey = fs.readFileSync('/etc/letsencrypt/live/toptier.ventures/privkey.pem', 'utf8');
-  certificate = fs.readFileSync('/etc/letsencrypt/live/toptier.ventures/fullchain.pem', 'utf8');
+  privateKey = fs.readFileSync('/etc/letsencrypt/live/blog.toptier.ventures/privkey.pem', 'utf8');
+  certificate = fs.readFileSync('/etc/letsencrypt/live/blog.toptier.ventures/fullchain.pem', 'utf8');
   console.log('Certificates loaded successfully');
 } catch (err) {
   console.error('Error loading certificates:', err);
