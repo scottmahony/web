@@ -19,5 +19,5 @@ app.get('/', (req, res) => {
 const httpsServer = https.createServer(credentials, app);
 
 httpsServer.listen(port, '0.0.0.0', () => {
-  console.log(`Proxy server listening at https://www.toptier.ventures`);
+  console.log(`Proxy server listening at https://blog.toptier.ventures`);
 });
