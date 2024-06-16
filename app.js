@@ -44,5 +44,5 @@ http.createServer((req, res) => {
 }).listen(80);
 
 httpsServer.listen(port, '0.0.0.0', () => {
-  console.log(`Proxy server listening at https://blog.toptier.ventures`);
+  console.log(`Proxy server listening at https://toptier.ventures`);
 });
